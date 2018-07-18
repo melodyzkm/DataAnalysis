@@ -20,6 +20,7 @@ db = connection.bcf
 # Chinese character
 pattern_c = re.compile(u"([\u4e00-\u9fa5]+)")
 
+
 def time2ISOString(time_stamp):
     """
     Convert seconds to ISO time string.
@@ -146,6 +147,7 @@ def get_bishijie_news():
     # check messages
     check_messages_update(messages, 'bishijie_news')
 
+
 def get_jinse_news():
     ## Raw Data Format
     # {
@@ -207,6 +209,7 @@ def get_jinse_news():
     # check messages
     check_messages_update(messages, 'jinse_news')
 
+
 def get_cryptopanic_news():
     ## Raw Data Format
     # {
@@ -262,6 +265,7 @@ def get_cryptopanic_news():
     # check messages
     check_messages_update(messages, 'cryptopanic_news_new')
 
+
 def get_gongxiangcj_news():
     ## Raw Data Format
     # {
@@ -300,7 +304,6 @@ def get_gongxiangcj_news():
             time_format_error('[gongxiangcj_news]', info.get('_id'), crawl_time)
         crawl_times.append(crawl_time)
 
-
     if len(object_ids) > 0:
         first = sorted(object_ids)[0]
         last = sorted(object_ids)[-1]
@@ -311,6 +314,7 @@ def get_gongxiangcj_news():
 
     # check messages
     check_messages_update(messages, 'gongxiangcj_news')
+
 
 def get_jinniu_news():
     # {
@@ -340,7 +344,7 @@ def get_jinniu_news():
             try:
                 if i :
                     object_ids.append(info.get('_id'))
-                    create_time = i.get('created_at')
+                    create_time = i.get('createdAt')
                     create_time = time2ISOString(create_time)
                     create_times.append(create_time)
 
@@ -363,6 +367,7 @@ def get_jinniu_news():
 
     # check messages
     check_messages_update(messages, 'jinniu_news')
+
 
 def get_jgy_news():
     ## Raw Data Format
@@ -401,7 +406,6 @@ def get_jgy_news():
         if not isinstance(crawl_time, datetime.datetime):
             time_format_error('[jgy_news]', info.get('_id'), crawl_time)
         crawl_times.append(crawl_time)
-
 
     # print log
     if len(object_ids) > 0:
@@ -466,6 +470,7 @@ def get_tuoniaox_news():
 
     # check messages
     check_messages_update(messages, 'tuoniaox_news')
+
 
 def get_newsnow_news():
     # Raw Data Format
