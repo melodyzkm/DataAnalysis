@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="jdk" jdkName="Python 3.6.0 (C:\Python36\pythonw.exe)" jdkType="Python SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Spider" />
+    <orderEntry type="module" module-name="Appium" />
+    <orderEntry type="module" module-name="API_AutoTest_Framework" />
+    <orderEntry type="module" module-name="MBT_API_Test_Framework" />
+    <orderEntry type="module" module-name="resume-master" />
+  </component>
+</module>
