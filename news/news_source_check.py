@@ -472,27 +472,236 @@ def get_tuoniaox_news():
     check_messages_update(messages, 'tuoniaox_news')
 
 
-def get_newsnow_news():
+def get_cointime_news():
     # Raw Data Format
     # {
-    #     "_id": ObjectId("5b1b71de14432c4884739438"),
-    #     "news_id": 941425317,
-    #     "country": "UK",
-    #     "url": "http://c.newsnow.co.uk/A/941425317?-34138:27390:3",
-    #     "title": "Huge Institutional Investment Will Cause A Bull Run, Here’s Where It Might Come From",
-    #     "source": "CryptoDaily",
-    #     "createtime": "1528464639"
+    #     "_id": ObjectId("5b5036f4ac1f2f7af51a0ba3"),
+    #     "data": {
+    #         "2018-07-18": [
+    #             {
+    #                 "content": "The closing value of the Garyscale’s Zcsah investment trust’s share on July 18th was of $21.16, 9.18% higher than the previous day. The market value has rose 9.18% in the last 24 hours, has dropped 14.69% in a month time, has dropped 9.84% in three months. Since the start of the Zcsah investment trust’s share has decreased 2.22%.",
+    #                 "updated_at_yuan": "23:58",
+    #             }
+    #         ]
+    #     },
     # }
-    pass
+    # get start_id
+    last_message = db.cointime_news.find().sort('_id', DESCENDING)
+    last_id = str(last_message[0].get("_id"))
+    start_id = save_id('id/cointime', last_id)
 
-def main_check():
+    # get crawl_time
+    create_times = []
+    contents = []
+    object_ids = []
+
+    infos = [a for a in db.cointime_news.find({'_id': {'$gt': ObjectId(start_id)}})]
+    for info in infos:
+        # get create times and contents
+        print(info)
+
+        for data in info.get("data").values():
+                for d in data:
+                    content = d.get("content")
+                    if content:
+                        object_ids.append(info.get('_id'))
+                        contents.append(content)
+
+                        if not (re.search(r'[a-zA-Z]', content) or re.search(pattern_c, content)):
+                            content_error('[cointime]', info.get('_id'), content)
+
+
+                        create_time = d.get('updated_at_yuan')
+                        # timezoe to UTC
+                        create_time = datetime.datetime.strptime(create_time, "%Y-%m-%d %H:%M:%S") + datetime.timedelta(hours=7)
+                        create_times.append(create_time)
+
+    # print log
+    if len(object_ids) > 0:
+        first = sorted(object_ids)[0]
+        last = sorted(object_ids)[-1]
+        logging.info("[cointime] check from {} to {}".format(str(first), str(last)))
+
+    # combine datetime and content
+    messages = [(i, k, v) for i, k, v in zip(object_ids, create_times, contents)]
+
+    # check messages
+    check_messages_update(messages, 'cointime')
+
+
+def get_coinhills_news():
+    # Raw Data Format
+    # {
+    #     "_id": ObjectId("5b1b843014432c706c4657c9"),
+    #     "data": [
+    #         {
+    #             "content": "Leading crypto research firm, Chainalysis, revealed staggering wealth transfer numbers, as reported by legacy news outlet Financial Times, concerning bitcoin core (BTC). From its price high in December of last year through April of 2018, BTC hodlers (supposed longer term investors) dumped $30 billion onto the market, shedding about half their collective positions just in December.",
+    #             "pubdate": 1528525941
+    #         },
+    #     ]
+    # }
+    # get start_id
+    last_message = db.coinhills_news.find().sort('_id', DESCENDING)
+    last_id = str(last_message[0].get("_id"))
+    start_id = save_id('id/coinhills', last_id)
+
+    # get crawl_time
+    create_times = []
+    contents = []
+    object_ids = []
+
+    infos = [a for a in db.coinhills_news.find({'_id': {'$gt': ObjectId(start_id)}})]
+    print(infos)
+    for info in infos:
+        # get create times and contents
+        print(info)
+
+        for data in info.get("data"):
+            content = data.get("content")
+            if content:
+                object_ids.append(info.get('_id'))
+                contents.append(content)
+
+                if not (re.search(r'[a-zA-Z]', content) or re.search(pattern_c, content)):
+                    content_error('[coinhills]', info.get('_id'), content)
+
+                pub_timestamp = data.get('pubdate')
+                # timezoe to UTC
+                create_time =time2ISOString(pub_timestamp)
+                create_times.append(create_time)
+
+    # print log
+    if len(object_ids) > 0:
+        first = sorted(object_ids)[0]
+        last = sorted(object_ids)[-1]
+        logging.info("[coinhills] check from {} to {}".format(str(first), str(last)))
+
+    # combine datetime and content
+    messages = [(i, k, v) for i, k, v in zip(object_ids, create_times, contents)]
+    print(messages)
+
+    # check messages
+    check_messages_update(messages, 'coinhills')
+
+
+def get_coinspeaker_news():
+    # Raw Data Format
+    # {
+    #     "_id": ObjectId("5b1b8dc614432c6560e96962"),
+    #     "title": "Crypto Startup Circle in Talks With U.S. to Become Federally Licensed Bank",
+    #     "description": "One of the most valuable cryptocurrency platforms is ready to become a ‘Guinea Pig’ for the U.S. regulators and break the ice between it and the crypto sphere.",
+    #     "push_date": ISODate("2018-06-06T00:00:00.000Z")
+    # }
+    # get start_id
+    last_message = db.coinspeaker_news.find().sort('_id', DESCENDING)
+    last_id = str(last_message[0].get("_id"))
+    start_id = save_id('id/coinspeaker', last_id)
+
+    # get crawl_time
+    create_times = []
+    contents = []
+    object_ids = []
+
+    infos = [a for a in db.coinspeaker_news.find({'_id': {'$gt': ObjectId(start_id)}})]
+
+    for info in infos:
+        # get create times and contents
+        print(info)
+        object_ids.append(info.get('_id'))
+        content = info.get("description")
+
+        contents.append(content)
+
+        if not (re.search(r'[a-zA-Z]', content) or re.search(pattern_c, content)):
+            content_error('[coinspeaker]', info.get('_id'), content)
+
+        create_time = info.get('push_date')
+        create_times.append(create_time)
+
+    # print log
+    if len(object_ids) > 0:
+        first = sorted(object_ids)[0]
+        last = sorted(object_ids)[-1]
+        logging.info("[coinspeaker] check from {} to {}".format(str(first), str(last)))
+
+    # combine datetime and content
+    messages = [(i, k, v) for i, k, v in zip(object_ids, create_times, contents)]
+    print(messages)
+
+    # check messages
+    check_messages_update(messages, 'coinspeaker')
+
+
+
+def get_coindesk_news():
+    # Raw Data Format
+    # {
+    #     "_id": ObjectId("5b1b8dc614432c6560e9695a"),
+    #     "title": "Chinese Search Giant Baidu Launches Blockchain-based Space Game Du Yuzhou",
+    #     "description": "After announcing its “super chain”, the Chinese search giant Baidu decided to launch a new blockchain-based game called Du Yuzhou.",
+    #     "push_date": "2018-07-19T09:30:25+00:00",
+    # }
+    # get start_id
+    last_message = db.coindesk_news.find().sort('_id', DESCENDING)
+    last_id = str(last_message[0].get("_id"))
+    start_id = save_id('id/coindesk', last_id)
+
+    # get crawl_time
+    create_times = []
+    contents = []
+    object_ids = []
+
+    infos = [a for a in db.coindesk_news.find({'_id': {'$gt': ObjectId(start_id)}})]
+
+    for info in infos:
+        # get create times and contents
+        print(info)
+        object_ids.append(info.get('_id'))
+        content = info.get("description")
+
+        contents.append(content)
+
+        if not (re.search(r'[a-zA-Z]', content) or re.search(pattern_c, content)):
+            content_error('[coindesk]', info.get('_id'), content)
+
+        create_time = info.get('push_date')
+        create_time = datetime.datetime.strptime(create_time, "%Y-%m-%dT%H:%M:%S+00:00")
+        create_times.append(create_time)
+
+    # print log
+    if len(object_ids) > 0:
+        first = sorted(object_ids)[0]
+        last = sorted(object_ids)[-1]
+        logging.info("[coindesk] check from {} to {}".format(str(first), str(last)))
+
+    # combine datetime and content
+    messages = [(i, k, v) for i, k, v in zip(object_ids, create_times, contents)]
+    print(messages)
+
+    # check messages
+    check_messages_update(messages, 'coindesk')
+
+
+def main_check_cn():
+    # Chinese news source
     get_bishijie_news()
     get_jinse_news()
     get_gongxiangcj_news()
     get_jinniu_news()
     get_jgy_news()
     get_tuoniaox_news()
-    connection.close()
+
+
+
+def main_check_en():
+    # En
+    get_cryptopanic_news()
+    get_cointime_news()
+    get_coinhills_news()
+    get_coinspeaker_news()
+    get_coindesk_news()
 
 if __name__  == "__main__":
-    main_check()
+    main_check_cn()
+    main_check_en()
+    connection.close()
