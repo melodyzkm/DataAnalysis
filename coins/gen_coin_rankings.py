@@ -136,7 +136,7 @@ def trans_name_from_en_to_cn(code, name):
 def send_email():
     sender = 'zhangzhangkm@126.com'
     password = 'admin123'
-    receivers = ["634730740@qq.com", "chenbin923@163.com", "coolhandxs@126.com"]  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+    receivers = ["634730740@qq.com", "chenbin923@163.com", "coolhandxs@126.com", "wuxiaojing@tanzhishuju.com", "liaoning@tanzhishuju.com"]  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
     # receivers = ["coolhandxs@126.com"]  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
     # 创建一个带附件的实例
