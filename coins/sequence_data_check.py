@@ -4,6 +4,7 @@ Check sequence data in MongoDB
 '''
 import datetime, sys
 from pymongo import MongoClient
+sys.path.append("..")
 from common.common import *
 
 config = get_config()
