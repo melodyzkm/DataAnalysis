@@ -5,6 +5,7 @@ import smtplib
 import yaml
 from email.mime.text import MIMEText
 from email.utils import formataddr
+from pymongo import MongoClient
 
 abs_path = os.path.dirname(__file__)
 
@@ -32,7 +33,16 @@ def get_config():
     with open(os.path.join(abs_path, "config.yml"), "rt", encoding="utf-8") as f:
         contents = f.read()
         configs = yaml.load(contents)
-        return  configs
+        return configs
+
+
+def write_log_into_mongodb(collection, data):
+    config = get_config()
+    test_mongodb = config.get("TEST_MONGODB")
+    port_mongodb = config.get("PORT_MONGODB")
+    connection = MongoClient(test_mongodb, port_mongodb)
+    db_monitor = connection.DataMonitor
+    db_monitor.get_collection(collection).insert_one(data)
 
 
 def time_format_error(source, id, infos):
@@ -63,19 +73,6 @@ def time2ISOString(s):
     # return datetime.datetime.strptime(s, "%Y-%m-%d %H:%M:%S")
     return s
 
-# def get_top_coin_code_name_abbr(top_no):
-#     connection = MongoClient(BC_MONGODB, PORT_MONGODB)
-#     db = connection.bcf
-#     top = []
-#     for token in db['token_indicator_slices'].find().sort([('indicators.cmc_market_cap_usd', -1)]).limit(top_no):
-#         match_coin = re.match(r'(.*?)\s\((.*?)\)', token['name'])
-#         if match_coin:
-#             name = match_coin[1]
-#             name_abbr = match_coin[2]
-#             top.append((token['code'], name, name_abbr))
-#         else:
-#             print("***" + token['code'])
-#     return top
 
 def get_avg(l):
     if len(l) < 1:
@@ -107,11 +104,10 @@ def reverse_dict_to_json_style(dict_to_be_reversed):
     return json.dumps(dict_to_be_reversed)
 
 
-
 def mail():
-    my_sender = '276170241@qq.com'  # 发件人邮箱账号
-    my_pass = 'ysddrrsxzkmlsx'  # 发件人邮箱密码
-    my_user = '276170241@qq.com'  # 收件人邮箱账号，我这边发送给自己
+    my_sender = '214522896@qq.com'  # 发件人邮箱账号
+    my_pass = 'qinwan'  # 发件人邮箱密码
+    my_user = '214522896@qq.com'  # 收件人邮箱账号，我这边发送给自己
     ret = True
     try:
         msg = MIMEText('填写邮件内容', 'plain', 'utf-8')

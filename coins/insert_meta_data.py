@@ -2,7 +2,7 @@ import re
 import os
 import json
 import xlrd
-import  requests
+import requests
 import sys
 sys.path.append("..")
 from common.common import *
@@ -14,6 +14,7 @@ BC_MONGODB = config.get("BC_MONGODB")
 PORT_MONGODB= config.get("PORT_MONGODB")
 connection = MongoClient(BC_MONGODB, PORT_MONGODB)
 db_bcf = connection.bcf
+
 
 def get_top_coin_code_name_abbr(top_no):
     connection = MongoClient(BC_MONGODB, PORT_MONGODB)
@@ -31,21 +32,6 @@ def get_top_coin_code_name_abbr(top_no):
     return top
 
 
-# def get_all_coin_code_name_abbr_in_the_mongo():
-#     connection = MongoClient(BC_MONGODB, PORT_MONGODB)
-#     db = connection.bcf
-#
-#     all_coins = []
-#     for token in db['token_indicator_slices'].find():
-#         match_coin = re.match(r'(.*?)\s\((.*?)\)', token['name'])
-#         if match_coin:
-#             name = match_coin[1]
-#             name_abbr = match_coin[2]
-#             all_coins.append((token['code'], name, name_abbr))
-#         else:
-#             print("***" + token['code'])
-#     return all_coins
-
 def sync():
     for coin_info in db_bcf.tokens.find({"links.coinmarketcap": {"$size": 1}, "logo_url": {"$exists": True}}):
         code = coin_info.get("code")
@@ -62,17 +48,17 @@ def insert_logo_url(file_path):
     if file_path.startswith("cmc"):
         img_format = "png"
     else:
-        img_format ='jpg'
+        img_format = 'jpg'
 
     with open(file_path, 'rt', encoding='utf-8') as f:
         for line in f.readlines():
-            d_coins =  json.loads(line)
+            d_coins = json.loads(line)
             code = d_coins.get("code")
             name = d_coins.get("name")
-            abbr = d_coins.get("name_abbr")
-            name_cn = d_coins.get("name_cn")
+            # abbr = d_coins.get("name_abbr")
+            # name_cn = d_coins.get("name_cn")
 
-            if db_bcf.tokens.find_one({"code": code}) and not get_cmc_coins():
+            if db_bcf.tokens.find_one({"code": code}):
 
                 try:
                     url = "https://bcfdata-cn.oss-cn-hangzhou.aliyuncs.com/logos/{}.{}".format(re.sub('\s','%20', name), img_format)
@@ -118,7 +104,6 @@ def insert_cn_name(file_path):
         code = token.get("code")
         db_bcf.tokens.update_one({"code": code}, {"$set": {"name_cn": None}})
 
-
     with open(file_path, 'rt', encoding='utf-8') as f:
         for line in f.readlines():
             d_coins =  json.loads(line)
@@ -154,19 +139,6 @@ def get_cmc_coins(logo_path):
 if __name__ == "__main__":
     # insert_cn_name("feixiaohao_coin_infos.jl")
     # insert_logo_url("feixiaohao_coin_infos.jl")
-    # insert_logo_url("cmc_coin_infos.jl")
-    # sync()
+    insert_logo_url("cmc_coin_infos.jl")
     # write_name_en()?
     # insert_abbr("cmc_coin_infos.jl")
-    n = 1
-    all_amount = db_bcf.tokens.find({"$or": [{"links.coinmarketcap": {"$size": 1}}, {"links.feixiaohao": {"$size": 1}}]}).count()
-    for i  in db_bcf.tokens.find({"$or": [{"links.coinmarketcap": {"$size": 1}}, {"links.feixiaohao": {"$size": 1}}]}):
-        code = i.get('code')
-
-        print("{}/{}".format(str(n), str(all_amount)))
-        if "logo_url" in i and i.get("logo_url"):
-            logo_url = i.get("logo_url").replace("bcfdata.oss-us-west-1", "bcfdata-cn.oss-cn-hangzhou")
-            db_bcf.tokens.update_one({"code": code}, {"$set": {"logo_url": logo_url}})
-        n = n+1
-
-

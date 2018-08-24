@@ -8,7 +8,7 @@ sample_amount: 采样数量
 '''
 # d_cycles = {'1m': 60, '5m': 300, '15m': 900, '30m': 1800, '1h': 3600, '4h': 14400, '12h': 43200, '1d': 86400}
 d_cycles = {'1m': 60, '5m': 300, '15m': 900, '30m': 1800, '1h': 3600, '4h': 14400}
-
+BASE_URL = "http://192.168.4.188:8787/api/candle"
 
 def trans_timestamp_to_local_time(time_stamp):
     return datetime.datetime.fromtimestamp(time_stamp).strftime("%Y-%m-%d %H:%M:%S")
@@ -37,17 +37,24 @@ def get_periodic_timestamp(cycle, start_time = None, sample_amount = None):
 
 
 def get_kline_data(cycle, market, symbol):
-    api = "http://test.mybesttoken.com/api/v3/candle/{}/{}/{}".format(market, symbol, cycle)
-    print(api)
-    response = requests.get(api).json()
+    params = {"cycle": cycle, "market": market, "symbol": symbol}
+    response = requests.get(BASE_URL, params=params).json()
+    if not response or not response.get(market).get(symbol):
+        print("No data with market:{} symbol:{}".format(market, symbol))
+        return None
+        # raise  ValueError("No data with market:{} symbol:{}".format(market, symbol))
+    ohlcvs = response.get(market).get(symbol)
 
     l_d_timestamp_ohlcv_1m = []
 
-    for single_kline_data in response:
-        ts = int(single_kline_data[0]/1000)
-        ohlcv = single_kline_data[1:5]
-        volume = single_kline_data[6]
-        ohlcv.append(volume)
+    for single_kline_data in ohlcvs:
+        ts = single_kline_data.get("time")/1000
+        open = single_kline_data.get("open")
+        close = single_kline_data.get("close")
+        high = single_kline_data.get("high")
+        low = single_kline_data.get("low")
+        volume = single_kline_data.get("volume")
+        ohlcv = [open, high, low, close, volume]
         l_d_timestamp_ohlcv_1m.append({ts:ohlcv})
 
     return l_d_timestamp_ohlcv_1m
@@ -57,6 +64,7 @@ def gen_kline_from_1m_lines(cycle, kline_data_1m):
 
     # [{timestamp1: [open, high, low, close, volume]}, {timestamp2: [open, high, low, close, volume]}]
     l_d_timestamp_ohlcv_1m = kline_data_1m
+    print(l_d_timestamp_ohlcv_1m)
     start_time = list(l_d_timestamp_ohlcv_1m[0].keys())[0]
 
     periodic_timestamps = get_periodic_timestamp(cycle, start_time=start_time)
@@ -65,8 +73,10 @@ def gen_kline_from_1m_lines(cycle, kline_data_1m):
     for i in range(1, len(periodic_timestamps)-1):
         start = periodic_timestamps[i]
         end = periodic_timestamps[i+1]
+        print(start_time, end)
 
-        kline_duration_data = [i for i in l_d_timestamp_ohlcv_1m if list(i.keys())[0] >= start and list(i.keys())[0] < end]
+        kline_duration_data = [i for i in l_d_timestamp_ohlcv_1m if i >= start and i < end]
+        print(kline_duration_data)
 
         timestamp = list(kline_duration_data[0].keys())[0]
         open = list(kline_duration_data[0].values())[0][0]
@@ -129,21 +139,60 @@ def compare(kline_data_from_api, kline_data_from_merge):
                                                                            prices_volume_names.get(index_volume), l_ohlcv_api[index_volume],
                                                                            l_ohlcv_merge[index_volume]))
             else:
-                print("{} OK".format(list(common_api_data[index].keys())[0]))
+                print("{} OK".format(list(common_api_data[index].keys())[0]) )
 
         else:
             print("{} OK".format(list(common_api_data[index].keys())[0]))
 
+
+def check_kline_data(cycle, market, symbol):
+    params = {"cycle": cycle, "market": market, "symbol": symbol}
+    response = requests.get(BASE_URL, params=params)
+    print(response.url)
+    response = response.json()
+
+    if not response:
+        return False
+    elif not response.get(market):
+        return  False
+    elif not response.get(market).get(symbol):
+        return False
+    else:
+        return True
+
+
 if __name__ == "__main__":
     # print(get_periodic_timestamp("1h",  sample_amount= 100))
-    huobipro_btc_usdt_1m = get_kline_data('1m', 'huobipro', 'btc-usdt')
-    huobipro_btc_usdt_5m = get_kline_data('5m', 'huobipro', 'btc-usdt')
-    huobipro_btc_usdt_5m_merger = gen_kline_from_1m_lines('5m', huobipro_btc_usdt_1m)
-    compare(huobipro_btc_usdt_5m, huobipro_btc_usdt_5m_merger)
+    # huobipro_btc_usdt_1m = get_kline_data('1m', 'huobipro', 'btc-usdt')
+    # huobipro_btc_usdt_5m = get_kline_data('5m', 'huobipro', 'btc-usdt')
+    # huobipro_btc_usdt_5m_merger = gen_kline_from_1m_lines('5m', huobipro_btc_usdt_1m)
+    # compare(huobipro_btc_usdt_5m, huobipro_btc_usdt_5m_merger)
+
+    #
+    # market = "binance"
+    # symbol = "btc-usdt"
+    # for i in d_cycles:
+    #     print(i)
+    #     compare(get_kline_data(i, market, symbol), gen_kline_from_1m_lines(i, get_kline_data('1m', market, symbol)))
 
 
-    market = "binance"
-    symbol = "btc-usdt"
-    for i in d_cycles:
-        print(i)
-        compare(get_kline_data(i, market, symbol), gen_kline_from_1m_lines(i, get_kline_data('1m', market, symbol)))
+    # 交易所数据
+    d = {"binance": "btc-usdt", "huobipro": "btc-usdt", "okex": "btc-usdt", "bitfinex": "btc-usd", "bibox": "btc-usdt",
+         "bitbank": "btc-jpy", "lbank": "btc-usdt", "zb": "btc-qc", "hitbtc": "btc-usd", "bitz": "eth-dkkt",
+         "gateio": "btc-usdt", "gdax": "btc-usd", "poloniex": "btc-usdt", "kraken": "btc-eur", "bcex": "eth-ckusd",
+         "upbit": "btc-usdt", "bitflyer": "btc-jpy", "bithumb": "btc-krw", "bitstamp": "btc-usd", "bittrex": "btc-usdt",
+         "coinbene": "btc-usdt", "exx": "btc-usdt"}
+
+    markets = ["bcex", "bibox","binance", "bitfinex", "bittrex", "gdax", "hitbtc", "huobipro", "kraken", "lbank", "okex", "upbit"]
+
+    markets_with_data = []
+    markets_without_data = []
+    for market in markets:
+        symbol = d.get(market)
+        if check_kline_data('1m', market, symbol):
+            markets_with_data.append(market)
+        else:
+            markets_without_data.append(market)
+
+    print(markets_with_data)
+    print(markets_without_data)

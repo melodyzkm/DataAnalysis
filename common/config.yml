@@ -1,2 +1,59 @@
 BC_MONGODB: 192.168.4.158
+TEST_MONGODB: 192.168.4.170
 PORT_MONGODB: 27017
+
+chain:
+   chain_balance_avg: 人均货币持有量
+   chain_balance_sum: 总货币量
+   chain_new_user_count_day: 日新增用户数
+   chain_active_user_count_day: 日活跃用户数
+   chain_new_user_rate_day: 日新增用户增长率
+   chain_trans_amount_avg_day: 用户平均成交量
+   chain_trans_amount_sum_day: 总成交量
+   chain_trans_amount_ratio_day: 换手率
+
+"cmc":
+   cmc_candle_close: 收盘价
+   cmc_candle_high: 最高价
+   cmc_candle_low: 最低价
+   cmc_candle_open: 开盘价
+   cmc_candle_market_cap: 市值
+   cmc_candle_volume: 成交量
+
+"github":
+   git_commit_count: git提交数
+   git_commit_count_day: git日提交数
+   git_commit_count_7day: git7日提交数
+   git_commit_count_30day: git30日提交数
+   git_fork_count: git分叉数
+   git_fork_count_day: git日分叉数
+   git_fork_count_7day: git7日分叉数
+   git_fork_count_30day: git30日分叉数
+   git_star_count: git好评数
+   git_star_count_day: git日好评数
+   git_star_count_7day: git7日好评数
+   git_star_count_30day: git30日好评数
+
+"telegram":
+   telegram_post_count: 电报发言数
+   telegram_post_count_day: 电报日发言数
+   telegram_post_count_7day: 电报7日发言数
+   telegram_post_count_30day: 电报30日发言数
+   telegram_user_count: 电报用户数
+   telegram_user_count_day: 电报日新增用户数
+   telegram_user_count_7day: 电报7日新增用户数
+   telegram_user_count_30day: 电报30日新增用户数
+
+"twitter":
+   twitter_favorite_count: 推特点赞数
+   twitter_favorite_count_day: 推特日点赞数
+   twitter_favorite_count_7day: 推特7日点赞数
+   twitter_favorite_count_30day: 推特30日点赞数
+   twitter_follower_count: 推特关注数
+   twitter_follower_count_day: 推特日新增关注数
+   twitter_follower_count_7day: 推特7日新增关注数
+   twitter_follower_count_30day: 推特30日新增关注数
+   twitter_tweet_count: 推特发推数
+   twitter_tweet_count_day: 推特日发推数
+   twitter_tweet_count_7day: 推特7日发推数
+   twitter_tweet_count_30day: 推特30日发推数
