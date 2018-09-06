@@ -5,8 +5,11 @@ The script is executed once a day.
 """
 import datetime
 import time
-from pymongo import MongoClient, DESCENDING
+from pymongo import MongoClient
+import sys
+sys.path.append("..")
 from common.common import get_config, write_log_into_mongodb
+
 
 
 def check_cailian_news():

@@ -5,6 +5,8 @@ The script is executed once a day.
 """
 import datetime
 import time
+import sys
+sys.path.append("..")
 from pymongo import MongoClient, DESCENDING
 from common.common import get_config, write_log_into_mongodb
 

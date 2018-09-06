@@ -6,6 +6,8 @@ The script is executed once a day by shell command.
 
 import datetime
 import requests
+import sys
+sys.path.append("..")
 from common.common import write_log_into_mongodb
 
 

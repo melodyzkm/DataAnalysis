@@ -4,6 +4,8 @@ The script is executed once a day.
 """
 
 import re
+import sys
+sys.path.append("..")
 from common.common import get_config
 from pymongo import MongoClient, DESCENDING
 

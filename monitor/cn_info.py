@@ -4,6 +4,8 @@ The result is restored in mongo DataMonitor.cn_info_monitor.
 The script is executed once a day.
 """
 import datetime
+import sys
+sys.path.append("..")
 from pymongo import MongoClient
 from common.common import get_config, write_log_into_mongodb
 
