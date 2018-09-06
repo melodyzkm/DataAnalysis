@@ -69,58 +69,73 @@ def get_all_single_day():
 def check_seq_day(code_with_attribution):
     """
     :param code_with_attribution: {"code": code, "cmc": cmc, "chain": chain, "github": github, "twitter": twitter, "telegram": telegram}
-    :return:  {code: code, date_no_data:[], data_lost: {time: IOSTime, chain:[], cmc:[], github:[], telegram:[], twitter:[]})
+    :return:
+    {code: code,
+    date_no_data:[],
+    data_lost: [{time1:[], time2:[]}]
+    }
     """
     sort_type = ("_id", DESCENDING)
     code = code_with_attribution.get("code")
-    seq_data = db_bcf.get_collection("seq_day").find({"code": code}).sort([sort_type]).limit(7)
+    seq_data = db_bcf.get_collection("seq_day").find({"code": code}).sort([sort_type]).limit(8)
 
     data_days = [data.get("time") for data in seq_data]
     days = get_all_single_day()
 
     d_check_result = {}
+
     data_lost_day = [day for day in days if day not in data_days]
     if data_lost_day:
         d_check_result.update({"date_no_data": data_lost_day})
 
+    # regenerator
+    start_date = [d for d in get_all_single_day()][0]
+    seq_data = db_bcf.get_collection("seq_day").find({"code": code, "time": {"$gte": start_date}}).sort([sort_type])
     for data in seq_data:
-        d_daily_check_result = {}
+        daily_check_result = {}
         time = data.get("time")
-        indicators = data.get("indicators")
+        str_time = time.strftime("%Y-%m-%d")
 
         if code_with_attribution.get("cmc"):
-            check_cmc = [i for i in config.get("cmc") if i not in indicators]
+            check_cmc = [i for i in config.get("cmc") if i not in data]
             if check_cmc:
-                d_daily_check_result.update({"cmc": check_cmc})
+                daily_check_result.update({"cmc": check_cmc})
 
         if code_with_attribution.get("chain"):
-            check_cmc = [i for i in config.get("chain") if i not in indicators]
-            if check_cmc:
-                d_daily_check_result.update({"chain": check_cmc})
+            now = datetime.datetime.utcnow()
+            if now.date() != time.date():
+                check_chain = [i for i in config.get("chain") if i not in data]
+                if check_chain:
+                    daily_check_result.update({"chain": check_chain})
 
         if code_with_attribution.get("github"):
-            check_cmc = [i for i in config.get("github") if i not in indicators]
-            if check_cmc:
-                d_daily_check_result.update({"github": check_cmc})
+            check_github = [i for i in config.get("github") if i not in data]
+            if check_github:
+                daily_check_result.update({"github": check_github})
 
         if code_with_attribution.get("telegram"):
-            check_cmc = [i for i in config.get("telegram") if i not in indicators]
-            if check_cmc:
-                d_daily_check_result.update({"telegram": check_cmc})
+            check_telegram = [i for i in config.get("telegram") if i not in data]
+            if check_telegram:
+                daily_check_result.update({"telegram": check_telegram})
 
         if code_with_attribution.get("twitter"):
-            check_cmc = [i for i in config.get("twitter") if i not in indicators]
-            if check_cmc:
-                d_daily_check_result.update({"twitter": check_cmc})
+            check_twitter = [i for i in config.get("twitter") if i not in data]
+            if check_twitter:
+                daily_check_result.update({"twitter": check_twitter})
 
-        if d_daily_check_result:
-            d_check_result.update({"code": code, "data_lost": {d_daily_check_result.update({"time": time})}})
+        if daily_check_result:
+            d_check_result.update({str_time: daily_check_result})
 
-    return d_check_result
+    if d_check_result:
+        d_check_result.update({"code": code, "create_time": datetime.datetime.now()})
+        write_log_into_mongodb("seq_day_monitor", d_check_result)
+
+
+def main_check():
+    tokens_with_attributions = get_top_coins_with_attributions()
+    for token in tokens_with_attributions:
+        check_seq_day(token)
 
 
 if __name__ == "__main__":
-    print([i for i in get_all_single_day()])
-    t = get_top_coins_with_attributions(1)
-    for tt in t:
-        print(check_seq_day(tt))
+    main_check()

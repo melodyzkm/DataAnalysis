@@ -46,20 +46,15 @@ def check_seq_5min(code):
     lost_quintuple_times = [t for t in quintuple_times if t not in data_times]
 
     if lost_quintuple_times:
-        return {"code": code, "lost_data_time": lost_quintuple_times}
+        d_check_result = {"code": code, "lost_data_time": lost_quintuple_times, "create_time": datetime.datetime.now()}
+        write_log_into_mongodb("seq_5min_monitor", d_check_result)
 
 
 def main_check():
-    create_time = datetime.datetime.now()
-    lost_token_data = []
     tokens = get_top_coins()
     for token in tokens:
         code = token.split(',')[0]
-        lost_data = check_seq_5min(code)
-        lost_token_data.append(lost_data)
-
-    if lost_token_data:
-        write_log_into_mongodb("seq_5min_monitor", {"create_time": create_time, "time_no_data": lost_token_data})
+        check_seq_5min(code)
 
 
 if __name__ == "__main__":
