@@ -1,0 +1,100 @@
+Bitcoin,Bitcoin (BTC),Bitcoin
+Ethereum,Ethereum (ETH),Ethereum
+Ripple,Ripple (XRP),Ripple
+BitcoinCash,Bitcoin Cash (BCH),Bitcoin Cash
+0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0,EOS (EOS),EOS
+Stellar,Stellar (XLM),Stellar
+Litecoin,Litecoin (LTC),Litecoin
+Tether,Tether (USDT),Tether
+Cardano,Cardano (ADA),Cardano
+Monero,Monero (XMR),Monero
+Tezos,Tezos (XTZ),Tezos
+IOTA,IOTA (MIOTA),IOTA
+0xf230b790e05390fc8295f4d3f60332c93bed42e2,TRON (TRX),TRON
+EthereumClassic,Ethereum Classic (ETC),Ethereum Classic
+Dash,Dash (DASH),Dash
+0xc56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b.neo,NEO (NEO),NEO
+0xe302bf71b1f6f3024e7642f9c824ac86b58436a0,OKB (OKB),OKB
+0x26d5bd2dfeda983ecd6c39899e69dae6431dffbb,ERC20 (ERC20),ERC20
+Ontology,Ontology (ONT),Ontology
+0xb8c77482e45f1f44de1745f52c74426c631bdd52,Binance Coin (BNB),Binance Coin
+NEM,NEM (XEM),NEM
+0xd850942ef8811f2a866692a623011bde52a462c1,VeChain (VEN),VeChain
+Zcash,Zcash (ZEC),Zcash
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07,OmiseGO (OMG),OmiseGO
+Lisk,Lisk (LSK),Lisk
+Qtum,Qtum (QTUM),Qtum
+DNotes,DNotes (NOTE),DNotes
+0xe41d2489571d322189246dafa5ebde1f4699f498,0x (ZRX),0x
+BitcoinGold,Bitcoin Gold (BTG),Bitcoin Gold
+Bytecoin,Bytecoin (BCN),Bytecoin
+Decred,Decred (DCR),Decred
+BitShares,BitShares (BTS),BitShares
+Dogecoin,Dogecoin (DOGE),Dogecoin
+0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2,Maker (MKR),Maker
+0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27,Zilliqa (ZIL),Zilliqa
+DigiByte,DigiByte (DGB),DigiByte
+Nano,Nano (NANO),Nano
+0xb5a5f22694352c15b00323844ad545abb2b11028,ICON (ICX),ICON
+Steem,Steem (STEEM),Steem
+0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d,Aeternity (AE),Aeternity
+Waves,Waves (WAVES),Waves
+0xe94327d07fc17907b4db788e5adf2ed424addff6,Augur (REP),Augur
+0x0d8775f648430679a709e98d2b0cb6250d2887ef,Basic Attention Token (BAT),Basic Attention Token
+Siacoin,Siacoin (SC),Siacoin
+Verge,Verge (XVG),Verge
+Bitcoin Private,Bitcoin Private (BTCP),Bitcoin Private
+0xcbce61316759d807c474441952ce41985bbc5a40,MoacToken (MOAC),MoacToken
+0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a,Populous (PPT),Populous
+0xe7d7b37e72510309db27c460378f957b1b04bd5d,empowr coin (EMPR),empowr coin
+0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750,Bytom (BTM),Bytom
+BitcoinDiamond,Bitcoin Diamond (BCD),Bitcoin Diamond
+0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3,Pundi X (NPXS),Pundi X
+0x168296bb09e24a88805cb9c33356536b980d3fc5,RChain (RHOC),RChain
+86f214055a7f4f5057922fd1647e00ef31ab0a3ff15217f8b90e295f051873a7.omni,MaidSafeCoin (MAID),MaidSafeCoin
+0xa74476443119a942de498590fe1f2454d7d4ac0d,Golem (GNT),Golem
+Stratis,Stratis (STRAT),Stratis
+0x744d70fdbe2ba4cf95131626614a1763df805b9e,Status (SNT),Status
+MetaverseETP,Metaverse ETP (ETP),Metaverse ETP
+Hshare,Hshare (HSR),Hshare
+0x039b5649a59967e3e936d7471f9c3700100ee1ab,KCS (KCS),KCS
+0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb,Mithril (MITH),Mithril
+0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74,Walton (WTC),Walton
+Komodo,Komodo (KMD),Komodo
+0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab,Internet of Services (IOST),Internet of Services
+0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6,Dentacoin (DCN),Dentacoin
+0x514910771af9ca656af840dff83e8264ecf986ca,ChainLink (LINK),ChainLink
+0xe0b7927c4af23765cb51314a0e0521a9645f0e2a,DigixDAO (DGD),DigixDAO
+MaidSafeCoin,MaidSafeCoin (MAID),MaidSafeCoin
+Ardor,Ardor (ARDR),Ardor
+0x6f259637dcd74c767781e37bc6133cd6a68aa161,Huobi Token (HT),Huobi Token
+0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466,Aion (AION),Aion
+Cryptonex,Cryptonex (CNX),Cryptonex
+ZenCash,ZenCash (ZEN),ZenCash
+MonaCoin,MonaCoin (MONA),MonaCoin
+Wanchain,Wanchain (WAN),Wanchain
+0xa974c709cfb4566686553a20790685a47aceaa33,Mixin (XIN),Mixin
+0xbf2179859fc6d5bee9bf9158632dc51678a4100e,ELF (ELF),ELF
+0x419d0d8bdd9af5e606ae2232ed285aff190e711b,FunFair (FUN),FunFair
+0x5d65d971895edc438f465c17db6992698a52318d,Nebulas (NAS),Nebulas
+0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c,Bancor (BNT),Bancor
+0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5,Kin (KIN),Kin
+0x6c6ee5e31d828de241282b9606c8e98ea48526e2,Holo (HOT),Holo
+0xea11755ae41d889ceec39a63e6ff75a02bc1c00d,Cortex (CTXC),Cortex
+0x595832f8fc6bf59c85c527fec3740a1b7a361269,Power Ledger (POWR),Power Ledger
+0xb63b606ac810a52cca15e44bb630fd42d8d1d83d,MCO (MCO),MCO
+ZCoin,ZCoin (XZC),ZCoin
+0x0f5d2fb29fb7d3cfee444a200298f468908cc942,Decentraland (MANA),Decentraland
+Emercoin,Emercoin (EMC),Emercoin
+ReddCoin,ReddCoin (RDD),ReddCoin
+Ark,Ark (ARK),Ark
+Elastos,Elastos (ELA),Elastos
+PIVX,PIVX (PIVX),PIVX
+0x9ab165d795019b6d8b3e971dda91071421305e5a,Aurora (AOA),Aurora
+Nxt,Nxt (NXT),Nxt
+0x39bb259f66e1c59d5abef88375979b4d20d98022,WAX (WAX),WAX
+0xdd974d5c2e2928dea5f71b9825b8b646686bd200,Kyber Network (KNC),Kyber Network
+0x8dd5fbce2f6a956c3022ba3663759011dd51e73e,True USD (TUSD),True USD
+0xb97048628db6b661d4c2aa833e95dbe1a905b280,TenX (PAY),TenX
+0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6,QASH (QASH),QASH
+0x4672bad527107471cb5067a887f4656d585a8a31,Dropil (DROP),Dropil
