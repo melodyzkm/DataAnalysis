@@ -8,15 +8,11 @@ import time
 import sys
 sys.path.append("..")
 from pymongo import MongoClient
-from common.common import get_config, write_log_into_mongodb
+from common.common import connect_mongodb, write_log_into_mongodb
 
 
 def check_message_info():
-    config = get_config()
-    spider_mongodb = config.get("SPIDER_MONGODB")
-    port_mongodb = config.get("PORT_MONGODB")
-    connection = MongoClient(spider_mongodb, port_mongodb)
-    db = connection.QuantEye
+    db = connect_mongodb("SPIDER_MONGODB", "FinanceInfo")
 
     current_ts = int(time.time())
     start_ts = current_ts - 1 * 60 * 60

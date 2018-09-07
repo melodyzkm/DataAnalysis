@@ -36,6 +36,18 @@ def get_config():
         return configs
 
 
+def connect_mongodb(server_name, database):
+    config = get_config()
+    if server_name in config:
+        mongo_ip = config.get(server_name)
+        mongo_port = config.get("PORT_MONGODB")
+        connection = MongoClient(mongo_ip, mongo_port)
+        db = connection.get_database(database)
+        return db
+    else:
+        raise KeyError("Invalid Server Name: {}".format(server_name))
+
+
 def write_log_into_mongodb(collection, data):
     config = get_config()
     test_mongodb = config.get("TEST_MONGODB")
@@ -125,5 +137,7 @@ def mail():
 
 
 if __name__ == "__main__":
-    d = get_config()
-    print(d)
+    db = connect_mongodb("SPIDER_MONGODB", "FinanceInfo")
+    start_ts = 1531110000
+    c = db.get_collection("message_info").find({"sort_score": {"$gt": start_ts}}).count()
+    print(c)

@@ -5,19 +5,13 @@ The script is executed once a day.
 """
 import datetime
 import time
-from pymongo import MongoClient
 import sys
 sys.path.append("..")
-from common.common import get_config, write_log_into_mongodb
-
+from common.common import connect_mongodb, write_log_into_mongodb
 
 
 def check_cailian_news():
-    config = get_config()
-    spider_mongodb = config.get("SPIDER_MONGODB")
-    port_mongodb = config.get("PORT_MONGODB")
-    connection = MongoClient(spider_mongodb, port_mongodb)
-    db = connection.QuantEye
+    db = connect_mongodb("SPIDER_MONGODB", "FinanceInfo")
 
     current_ts = int(time.time())
     start_ts = current_ts - 24 * 60 * 60
