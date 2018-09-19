@@ -24,7 +24,7 @@ def rankings_check():
             total_amount += 1
             if item.get("update_info").get("update_time") > start_time:
                 refreshed_count += 1
-    d_check_result = {"create_time": datetime.datetime.now(), "24h_updated_amount": refreshed_count, "total": total_amount}
+    d_check_result = {"create_time": datetime.datetime.now(), "1h_updated_amount": refreshed_count, "total": total_amount}
     write_log_into_mongodb("rankings", d_check_result)
 
 
