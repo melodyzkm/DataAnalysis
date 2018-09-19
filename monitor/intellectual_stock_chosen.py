@@ -20,11 +20,9 @@ def intellectual_stock_chosen():
     total_amount = db.get_collection("picking_strategies").find({}).count()
     refreshed_count = 0
     for item in db.get_collection("picking_strategies").find({}):
-        print(item.get("state").get("last_date_with_picked_targets"))
         if item.get("state").get("last_date_with_picked_targets") >= start_time:
             refreshed_count += 1
     d_check_result = {"create_time": datetime.datetime.now(), "24h_updated_amount": refreshed_count, "total": total_amount}
-    print(d_check_result)
     write_log_into_mongodb("intellectual_stock_chosen_monitor", d_check_result)
 
 
