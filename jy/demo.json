@@ -1,0 +1,48 @@
+{
+  "table_name": "LC_LeaderIntroduce",
+  "table_chinese_name": "现任和历任领导人介绍",
+
+  "columns": [
+    {
+      "column_names": ["InfoPublDate"],
+      "indicators":
+      [
+        {
+          "name": "null_ratio",
+          "expected": "0"
+        }
+      ],
+      "group_by": "LeaderDegree"
+     },
+
+    {
+      "column_names": ["InDate","OffDate"],
+      "indicators":
+      [
+        {
+          "name": "null_ratio",
+          "expected": "0"
+        },
+        {
+          "name": "incorrect_ordered_ratio",
+          "expected": "0"
+        }
+      ],
+      "group_by": "LeaderDegree"
+     },
+
+     {
+      "column_names":["LeaderDegree"],
+      "indicators": [
+       {
+          "name": "null_ratio",
+          "expected": "0"
+        },
+       {
+      "name": "category_list",
+      "expected": "1,2,3,4,5,6,7,8"
+      }
+      ]
+     }
+  ]
+}
