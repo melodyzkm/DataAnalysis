@@ -41,7 +41,7 @@ def construct_query_body():
 
 def get_search_result():
     config = get_config()
-    es = Elasticsearch(config.get("ES_TEST"))
+    es = Elasticsearch(config.get("ES_PRODUCT"))
     bodies = construct_query_body()
     index_table = ["recomm-jyanalysereports-2018", "recomm-jymarketnews-2018"]
     query_result_doc_time = []
