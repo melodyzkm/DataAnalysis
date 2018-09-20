@@ -11,7 +11,7 @@ from common.common import connect_mongodb, write_log_into_mongodb
 
 
 def rankings_check():
-    db = connect_mongodb("QE_GREY_MONGODB", "QuantEye")
+    db = connect_mongodb("QE_PRODUCT_MONGODB", "QuantEye")
 
     current_time = datetime.datetime.utcnow()
     start_time = current_time - datetime.timedelta(minutes=10)

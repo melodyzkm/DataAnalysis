@@ -12,7 +12,7 @@ from common.common import connect_mongodb, write_log_into_mongodb
 
 
 def check_message_info():
-    db = connect_mongodb("SPIDER_MONGODB", "FinanceInfo")
+    db = connect_mongodb("QE_PRODUCT_MONGODB", "QuantEye")
 
     current_ts = int(time.time())
     start_ts = current_ts - 1 * 60 * 60

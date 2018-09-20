@@ -11,7 +11,7 @@ from common.common import connect_mongodb, write_log_into_mongodb
 
 
 def intellectual_stock_chosen():
-    db = connect_mongodb("QE_GREY_MONGODB", "QuantEye")
+    db = connect_mongodb("QE_PRODUCT_MONGODB", "QuantEye")
 
     current_time = datetime.datetime.now()
     current_time_with_12_o_clock = datetime.datetime(current_time.year, current_time.month, current_time.day, 0, 0, 0)
